@@ -4,6 +4,7 @@ import {
     signInWithRedirect,
     signInWithPopup,
     GoogleAuthProvider, 
+    createUserWithEmailAndPassword,
 } from 'firebase/auth';
 
 import {
@@ -26,25 +27,25 @@ const firebaseConfig = {
   // Initialize Firebase
   const firebaseApp = initializeApp(firebaseConfig);
 
-  const provider = new GoogleAuthProvider();
+  const googleProvider = new GoogleAuthProvider();
   
-  provider.setCustomParameters({
+  googleProvider.setCustomParameters({
     prompt: "select_account" // force user to select an account
   });
 
   export const auth = getAuth();
-  export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+  export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+  export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
   export const db = getFirestore();
 
-  export const createUserDocumentFromAuth = async (userAuth) => {
+  export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
     // return doc ref from database 'db', 'users' collection with 'uid' from user Authorization
     const userDocRef = doc(db, 'users', userAuth.uid);
 
     const userSnapshot = await getDoc(userDocRef);
-    //console.log(userSnapshot.exists());
     
-    // if user data doesn't exist
+    // if user data didn't exist
     if (!userSnapshot.exists()) {
         const { displayName, email } = userAuth;
         const createdAt = new Date();
@@ -53,7 +54,8 @@ const firebaseConfig = {
             await setDoc(userDocRef, {
                 displayName,
                 email,
-                createdAt
+                createdAt,
+                ...additionalInformation,
             });
         } catch (error) {
             console.log('error creating the user', error.message);
@@ -64,3 +66,8 @@ const firebaseConfig = {
     
 };
 
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) return;
+    
+    return await createUserWithEmailAndPassword(auth, email, password);
+}
