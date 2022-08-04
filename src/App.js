@@ -4,6 +4,7 @@ import Navigation from './routes/navigation/navigation.component';
 import Shop from './routes/shop/shop.component.jsx';
 
 import Authentication from './routes/authentication/authentication.component';
+import CheckOut from './routes/checkout/checkout.component';
 
 import '../src/routes/navigation/navigation.style.scss';
 
@@ -15,6 +16,7 @@ const App = () => {
         <Route index element={<Home />} />
         <Route path='/shop' element={<Shop />} />
         <Route path='/auth' element={<Authentication />} />
+        <Route path='/checkout' element={<CheckOut />} />
       </Route> 
     </Routes>
   );
