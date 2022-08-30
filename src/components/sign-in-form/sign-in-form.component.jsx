@@ -1,36 +1,39 @@
 import { useState } from "react";
-
-import { signInWithGooglePopup, signInAuthUserWithEmailAndPassword } 
-    from "../../utils/firebase/firebase.utils";
+import { useDispatch } from "react-redux";
 
 import FormInput from "../form-input/form-input.component";
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
+import { googleSignInStart, emailSignInStart } from "../../store/user/user.action";
+
 import './sign-in-form.style.scss';
+
+
 
 const defaultFormFields = {
     email: '',
     password: '',
-}
+};
 
 const SignInForm = () => {
-    
-    const  [formFields, setFormFieds] = useState(defaultFormFields);
+    const dispatch = useDispatch();
+    //const  [formFields, setFormFields] = useState(defaultFormFields);
+    const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
 
     const resetFormFields = () => {
-        setFormFieds(defaultFormFields);
+        setFormFields(defaultFormFields);
     };
 
     const signInWithGoogle = async () => {
-        await signInWithGooglePopup();
+        dispatch(googleSignInStart());
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            await signInAuthUserWithEmailAndPassword(email, password);
+            dispatch(emailSignInStart(email, password));
             resetFormFields();
         } catch (error) {
             switch(error.code) {
@@ -49,7 +52,7 @@ const SignInForm = () => {
     
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setFormFieds({...formFields, [name]: value});
+        setFormFields({ ...formFields, [name]: value });
     };
     
     return (
@@ -63,7 +66,7 @@ const SignInForm = () => {
                 <FormInput label="Password" type='password' required onChange={handleChange} 
                        name="password" value={password} />
                 <div className="buttons-container">
-                    <Button type='submit'>Sign In</Button>
+                    <Button type='submit' onClick={handleSubmit}>Sign In</Button>
                     {
                     /*Important!!! type='button' is required, because if not indicated explicitly, 
                      it's assumed to be a 'submit' button and it'd trigger onSubmit event */
