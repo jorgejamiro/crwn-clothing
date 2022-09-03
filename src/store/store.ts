@@ -1,17 +1,28 @@
-import { compose, createStore, applyMiddleware } from 'redux';
+import { compose, createStore, applyMiddleware, Middleware } from 'redux';
 import logger from 'redux-logger';
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistStore, persistReducer, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 
 import { rootReducer } from './root-reducer';
 import { rootSaga } from './root-saga';
 
+export type RootState = ReturnType<typeof rootReducer>;
 
-const persistConfig = {
+declare global {
+    interface Window {
+      __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+
+type ExtendedPersistConfig = PersistConfig<RootState> & {
+    whitelist: (keyof RootState)[];
+};
+
+const persistConfig: ExtendedPersistConfig = {
     key: 'root',
     storage,
-    blacklist: ['user']  // we don't want 'user' to persist
+    whitelist: ['cart'],
 };
 
 const sagaMiddleware = createSagaMiddleware();
@@ -22,7 +33,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const middleWares = [
     process.env.NODE_ENV !== 'production' && logger,
     sagaMiddleware,
-].filter(Boolean);
+].filter((middleware): middleware is Middleware => Boolean(middleware));
 
 
 // in order to use DevTools Extension only when needed
