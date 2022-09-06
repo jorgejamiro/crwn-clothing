@@ -7,10 +7,14 @@ import { selectCategoriesIsLoading, selectCategoriesMap } from '../../store/cate
 import ProductCard from '../../components/product-card/product-card.component';
 import Spinner from '../../components/spinner/spinner.component';
 
-import './category.style.scss';
+import { CategoryContainer, Title } from './category.style';
+
+type CategoryRouteParams = {
+    category: string;
+}
 
 const category = () => {
-    const { category } = useParams(); // in order to retrive param from the route
+    const { category } = useParams<keyof CategoryRouteParams>() as CategoryRouteParams; // in order to retrive param from the route
     const categoriesMap = useSelector(selectCategoriesMap);
     const isLoading = useSelector(selectCategoriesIsLoading);
     const [products, setProducts] = useState(categoriesMap[category]);
@@ -21,19 +25,19 @@ const category = () => {
     
     return (
         <Fragment>
-            <h2 className='category-title'>{category.toLocaleUpperCase()}</h2>
+            <Title>{category.toLocaleUpperCase()}</Title>
             {
                 isLoading ? (
                     <Spinner />
                 ) : ( 
-                    <div className='category-container'>
+                    <CategoryContainer>
                     {
                         products && // in order to safeguard, due to async fetching of the products
                         products.map((product) => (
                             <ProductCard key={product.id} product={product} />
                         ))
                     }
-                    </div>
+                    </CategoryContainer>
                 )
             }
         </Fragment>

@@ -11,8 +11,7 @@ import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component
 import { signOutStart } from '../../store/user/user.action';
 import { ReactComponent as CrownLogo } from '../../assets/crown.svg';
 
-//import './navigation.style.scss';
-import { NavigationContainer, NavLinks, NavLink, LogoContainer } from './navigation.styles.jsx';
+import { NavigationContainer, NavLinks, NavLink, LogoContainer } from './navigation.styles';
 
 
 const Navigation = () => {
@@ -44,26 +43,6 @@ const Navigation = () => {
                             </NavLink>
                           )
           }
-      
-      {/*
-              <CrownLogo className='logo' />
-          </Link>
-          <div className='nav-links-container'>
-            <Link className='nav-link' to='shop'>SHOP</Link>
-            {
-              currentUser? (
-                            <span className='nav-link' onClick={ signOutUser }>SIGN OUT</span>
-                            )
-                          : (
-                              <Link className='nav-link' to='auth'>
-                                SIGN IN
-                              </Link>
-                            )
-            }
-            <CartIcon />
-          </div>
-          {isCartOpen && <CartDropdown />}
-          */}
           <CartIcon />
         </NavLinks>
         {isCartOpen && <CartDropdown />}

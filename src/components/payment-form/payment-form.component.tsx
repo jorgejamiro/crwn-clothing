@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { StripeCardElement } from '@stripe/stripe-js';
 import { useSelector } from 'react-redux';
 
 import { BUTTON_TYPE_CLASSES } from '../button/button.component';
@@ -8,6 +9,8 @@ import { PaymentFormContainer, FormContainer, PaymentButton } from './payment-fo
 import { selectCartTotal } from '../../store/cart/cart.selector';
 import { selectCurrentUser } from '../../store/user/user.selector';
 
+const ifValidCardElement = (card: StripeCardElement | null): card is StripeCardElement => card !== null;
+
 const PaymentForm = () => {
     const stripe = useStripe();
     const elements = useElements();
@@ -15,7 +18,7 @@ const PaymentForm = () => {
     const currentUser = useSelector(selectCurrentUser);
     const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
-    const paymentHandler = async (e) => {
+    const paymentHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
         if (!stripe || !elements) {
@@ -34,9 +37,13 @@ const PaymentForm = () => {
 
         const { paymentIntent: { client_secret }} = response;
 
+        const cardDetails = elements.getElement(CardElement);
+
+        if (!ifValidCardElement(cardDetails)) return;
+
         const paymentResult = await stripe.confirmCardPayment(client_secret, {
             payment_method: {
-                card: elements.getElement(CardElement),
+                card: cardDetails,
                 billing_details: {
                     name: currentUser ? currentUser.displayName : 'Guest',
                 },
@@ -57,11 +64,11 @@ const PaymentForm = () => {
 
   return (
     <PaymentFormContainer>
-        <FormContainer>
+        <FormContainer onSubmit={paymentHandler}>
             <h2>Credit Card Payment: </h2>
             <CardElement />
-            <PaymentButton type={BUTTON_TYPE_CLASSES.inverted} 
-                    onClick={paymentHandler}
+            <PaymentButton 
+                    buttonType={BUTTON_TYPE_CLASSES.inverted} 
                     isLoading={isProcessingPayment}
             >
                     Pay now
