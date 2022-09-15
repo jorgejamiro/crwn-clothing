@@ -17,13 +17,19 @@ export const NavigationContainer = styled.div`
 `;
 
 export const LogoContainer = styled(Link)`
-  height: 100%;
-  width: 70px;
-  padding: 25px;
+  padding-left: 15px;
+  padding-top: 10px;
+
+  .logo {
+    width: 70%;
+    height: 70%;
+  }
 
   @media screen and (max-width: 800px) {
-    width: 50px;
-    padding: 0;
+    .logo {
+      width: 80%;
+      height: 80%;
+    }
   }
 `;
 

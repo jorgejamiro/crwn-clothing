@@ -1,0 +1,19 @@
+.checkout-container {
+  width: 55%;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto 0;
+
+  .total {
+    margin-top: 30px;
+    margin-left: auto;
+    font-size: 25px;
+  }
+
+  @media screen and (max-width: 800px) {
+    width: 90%;
+  }
+
+}

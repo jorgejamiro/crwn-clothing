@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { selectCartCount, selectIsCartOpen } from '../../store/cart/cart.selector';
@@ -12,7 +13,17 @@ const CartIcon = () => {
     const cartCount = useSelector(selectCartCount);
     const isCartOpen = useSelector(selectIsCartOpen);
 
-    const toggleIsCartOpen = () => dispatch(setIsCartOpen(!isCartOpen));
+    const toggleIsCartOpen = (event: MouseEvent) => {
+        event.stopPropagation();
+        dispatch(setIsCartOpen(!isCartOpen))
+    };
+
+    const closeCart = () => {
+        if (isCartOpen) {
+            dispatch(setIsCartOpen(false));
+        }
+    };
+    document.addEventListener('click', closeCart);
 
     return (
         <CartIconContainer onClick={toggleIsCartOpen}>
