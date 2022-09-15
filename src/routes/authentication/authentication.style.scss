@@ -1,12 +1,12 @@
 .authentication-container {
     display: flex;
-    width: 900px;
+    width: 800px;
     justify-content: space-between;
     margin: 30px auto;
 
     @media screen and (max-width: 800px) {
         flex-direction: column;
-        width: unset;
+        width: 300px;
         align-items: center;
         
         > *:first-child {
