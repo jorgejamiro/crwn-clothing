@@ -1,0 +1,19 @@
+{
+  "SHOP": "SHOP",
+  "SIGN IN": "SIGN IN",
+  "SIGN OUT": "SIGN OUT",
+  "Shop Now": "Shop Now",
+  "hats": "hats",
+  "jackets": "jackets",
+  "sneakers": "sneakers",
+  "mens": "men's",
+  "womens": "women's",
+
+  "msgEmptyCart": "Your cart is empty",
+  "msgCheckout": "GO TO CHECKOUT",
+  "msgCreditCardPayment": "Credit Card Payment",
+  "msgPay": "Pay Now",
+  "msgPwdNotMatch": "Passwords do not match",
+  "msgEmailUsed": "Cannot create user, email already in use",
+  "msgUserCreation": "user creation encountered an error"
+}

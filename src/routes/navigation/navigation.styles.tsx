@@ -49,3 +49,12 @@ export const NavLink = styled(Link)`
   padding: 10px 15px;
   cursor: pointer;
 `;
+
+export const TabLang = styled.div`
+  margin-left: 80px;
+  margin-bottom: 5px;
+`;
+
+export const User = styled.div`
+  margin-left: 30px;
+`;

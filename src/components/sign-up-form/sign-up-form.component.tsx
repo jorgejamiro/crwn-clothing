@@ -1,5 +1,6 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { AuthError, AuthErrorCodes } from "firebase/auth";
 
@@ -20,6 +21,7 @@ const SignUpForm = () => {
     const dispatch = useDispatch();
     const  [formFields, setFormFieds] = useState(defaultFormFields);
     const { displayName, email, password, confirmPassword } = formFields;
+    const { t } = useTranslation();
 
     const resetFormFields = () => {
         setFormFieds(defaultFormFields);
@@ -29,7 +31,7 @@ const SignUpForm = () => {
         event.preventDefault();
 
         if (password !== confirmPassword) {
-            alert("passwords do not match");
+            alert(t('msgPwdNotMatch'));
             return;
         }
 
@@ -39,7 +41,7 @@ const SignUpForm = () => {
         
         } catch (error) {
             if ((error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS)
-                alert("cannot create user, email already in use");
+                alert(t('msgEmailUsed'));
             else {
                 console.log('user creation encountered an error', error);
             }

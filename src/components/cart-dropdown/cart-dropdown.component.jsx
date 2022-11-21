@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { selectCartItems } from '../../store/cart/cart.selector';
 
-
+import { useTranslation } from 'react-i18next';
 // in order to 'jump' to a specific page
 import { useNavigate } from 'react-router-dom';
 
@@ -14,6 +14,7 @@ import { CartDropdownContainer, EmptyMessage, CartItems } from './cart-dropdown.
 const CartDropdown = () => {
     const cartItems = useSelector(selectCartItems);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const goToCheckoutHandler = () => {
         navigate('/checkout');
@@ -27,11 +28,11 @@ const CartDropdown = () => {
                         <CartItem key={item.id} cartItem={item} />
                     )))
                     : (
-                        <EmptyMessage>Your cart is empty</EmptyMessage>
+                        <EmptyMessage>{t('msgEmptyCart')}</EmptyMessage>
                     )
                 }
             </CartItems>
-            <Button buttonType={BUTTON_TYPE_CLASSES.base} onClick={goToCheckoutHandler}>GO TO CHECKOUT</Button>
+            <Button buttonType={BUTTON_TYPE_CLASSES.base} onClick={goToCheckoutHandler}>{t('msgCheckout')}</Button>
         </CartDropdownContainer>
     );
 }

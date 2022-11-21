@@ -2,6 +2,7 @@ import { useState, FormEvent } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { StripeCardElement } from '@stripe/stripe-js';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import { PaymentFormContainer, FormContainer, PaymentButton } from './payment-form.styles';
@@ -17,6 +18,7 @@ const PaymentForm = () => {
     const amount = useSelector(selectCartTotal);
     const currentUser = useSelector(selectCurrentUser);
     const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+    const { t } = useTranslation();
 
     const paymentHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -65,13 +67,13 @@ const PaymentForm = () => {
   return (
     <PaymentFormContainer>
         <FormContainer onSubmit={paymentHandler}>
-            <h2>Credit Card Payment: </h2>
+            <h2>{ t('msgCreditCardPayment') }</h2>
             <CardElement />
             <PaymentButton 
                     buttonType={BUTTON_TYPE_CLASSES.inverted} 
                     isLoading={isProcessingPayment}
             >
-                    Pay now
+                    {t('msgPay')}
             </PaymentButton>
         </FormContainer>
     </PaymentFormContainer>

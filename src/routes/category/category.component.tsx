@@ -7,6 +7,8 @@ import { selectCategoriesIsLoading, selectCategoriesMap } from '../../store/cate
 import ProductCard from '../../components/product-card/product-card.component';
 import Spinner from '../../components/spinner/spinner.component';
 
+import { useTranslation } from 'react-i18next';
+
 import { CategoryContainer, Title } from './category.style';
 
 type CategoryRouteParams = {
@@ -18,6 +20,7 @@ const category = () => {
     const categoriesMap = useSelector(selectCategoriesMap);
     const isLoading = useSelector(selectCategoriesIsLoading);
     const [products, setProducts] = useState(categoriesMap[category]);
+    const { t } = useTranslation();
     
     useEffect(() => {
         setProducts(categoriesMap[category]);
@@ -25,7 +28,7 @@ const category = () => {
     
     return (
         <Fragment>
-            <Title>{category.toLocaleUpperCase()}</Title>
+            <Title>{t(`${category}`).toLocaleUpperCase()}</Title>
             {
                 isLoading ? (
                     <Spinner />

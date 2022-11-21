@@ -1,0 +1,19 @@
+{
+  "SHOP": "COMPRAR",
+  "SIGN IN": "INICIAR SESIÓN",
+  "SIGN OUT": "CERRAR SESIÓN",
+  "Shop Now": "Comprar Ahora",
+  "hats": "sombreros",
+  "jackets": "chaquetas",
+  "sneakers": "zapatillas",
+  "mens": "hombre",
+  "womens": "mujer",
+
+  "msgEmptyCart": "Ningún producto seleccionado",
+  "msgCheckout": "Valida tu pedido",
+  "msgCreditCardPayment": "Pago con Tarjeta",
+  "msgPay": "Paga Ahora",
+  "msgPwdNotMatch": "Las Passwords no coinciden",
+  "msgEmailUsed": "No es posible crear el usuario, este Email ya está siendo usado",
+  "msgUserCreation": "Error al intentar crear el usuario"
+}
